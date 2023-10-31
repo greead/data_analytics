@@ -1,0 +1,30 @@
+[
+    {
+        "params":["Time", "Continuous"],
+        "graphs":["Line Chart"]
+    },
+    {
+        "params":["Time", "Continuous", "Categorical"],
+        "graphs":["Multi-Line Chart"]
+    },
+    {
+        "params":["Categorical", "Continuous"],
+        "graphs":["Bar Chart", "Line Chart"]
+    },
+    {
+        "params":["Categorical", "Continuous", "Categorical"],
+        "graphs":["Grouped Bar Chart", "Multi-Line Chart"]
+    },
+    {
+        "params":["Location", "Continuous"],
+        "graphs":["Chloropleth Map", "Bar Chart"]
+    },
+    {
+        "params":["Continuous", "Continuous"],
+        "graphs":["Scatterplot", "Histogram"]
+    },
+    {
+        "params":["Time", "Continuous", "Location"],
+        "graphs":["Multi-Line Chart"]
+    }
+]

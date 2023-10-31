@@ -1,0 +1,127 @@
+[
+    {
+        "word":"GDP",
+        "parent":"Money",
+        "value":["Continuous"]
+    },
+    {
+        "word":"Time",
+        "parent":"",
+        "value":["Time"]
+    },
+    {
+        "word":"January",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"February",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"March",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"April",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"May",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"June",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"July",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"August",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"September",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"October",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"November",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"December",
+        "parent":"Month",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"Currency",
+        "parent":"",
+        "value":["Categorical"]
+    },
+    {
+        "word":"S&P",
+        "parent":"Money",
+        "value":["Continuous"]
+    },
+    {
+        "word":"Revenue",
+        "parent":"Money",
+        "value":["Continuous"]
+    },
+    {
+        "word":"Unemployment",
+        "parent":"",
+        "value":["Continuous"]
+    },
+    {
+        "word":"US",
+        "parent":"Country",
+        "value":["Location"]
+    },
+    {
+        "word":"Percent",
+        "parent":"",
+        "value":["Proportion"]
+    },
+    {
+        "word":"Portion",
+        "parent":"",
+        "value":["Proportion"]
+    },
+    {
+        "word":"Rank",
+        "parent":"",
+        "value":["Ordinal"]
+    },
+    {
+        "word":"Value",
+        "parent":"",
+        "value":["Continuous"]
+    },
+    {
+        "word":"Score",
+        "parent":"",
+        "value":["Continuous"]
+    },
+    {
+        "word":"Grade",
+        "parent":"",
+        "value":["Categorical"]
+    }
+]

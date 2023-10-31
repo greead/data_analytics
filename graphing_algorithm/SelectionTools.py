@@ -1,35 +1,21 @@
-class KnowledgeItem:
-    def __init__(self, params: list[str], graphs: list[str]):
-        self.params: list[str] = params
-        self.graphs: list[str] = graphs
-
-
-class KnowledgeBase:
-    def __init__(self):
-        self.items: list[KnowledgeItem] = []
-
-    # def as_dict(self) -> dict:
-    #     return {}
-    #
-
 
 class EncodedItem:
     """
     Class representing an Encoded Item. DTO with an as_dict method for dictionary representation.
     """
-    def __init__(self, word: str, parent: str, value: str):
+    def __init__(self, word: str, parent: str, values: list[str]):
         """
         Initialize the encoded item.
         :param word: Encoded word.
         :param parent: Parent for grouping.
         :param value: Decoded graphing parameter.
         """
-        self.word = word
-        self.parent = parent
-        self.value = value
+        self.word: str = word
+        self.parent: str = parent
+        self.values: list[str] = values
 
     def as_dict(self) -> dict:
-        return {k: v for (k, v) in zip(['word', 'parent', 'value'], self.word, self.parent, self.value)}
+        return {'word':self.word, 'parent':self.parent, 'values':self.values}
 
 
 class ValueDictionary:
@@ -47,16 +33,33 @@ class ValueDictionary:
         Adds the Encoded Item to the dictionary
         :param new_value: Encoded Item to add
         """
-        self.items += new_value
+        self.items.append(new_value)
 
-    def add_word(self, word: str, parent: str, value: str) -> None:
+    def add_word(self, word: str, parent: str, value: list[str]) -> None:
         """
         Adds the Encoded Item to the dictionary
         :param word: Word of item
         :param parent: Parent of item
         :param value: Value of item
         """
-        self.items += EncodedItem(word, parent, value)
+        self.items.append(EncodedItem(word, parent, value))
+        
+    def search_matches(self, problem_statement: str) -> list[str]:
+        """Find all matches for the given problem statement
+
+        Args:
+            problem_statement (str): Given problem statement
+
+        Returns:
+            list[str]: List of words found in the value base
+        """
+        cleaned_statement = ""
+        for letter in problem_statement:
+            if letter.isalpha() or letter.isspace():
+                cleaned_statement += letter
+            
+        words = cleaned_statement.split()
+        return [word for word in words if word.lower() in self]        
 
     def clear(self) -> None:
         """
@@ -70,14 +73,25 @@ class ValueDictionary:
         :param new_values: Encoded Items list
         """
         self.items += new_values
-
-    def __getitem__(self, item: str):
+        
+    def decode(self, word: str) -> list[str]:
+        if word in self:
+            return self[word].values[0]
+        return None
+    
+    def __getitem__(self, word:str) -> EncodedItem:
         """
-        Returns a list of each item
+        Returns the first item found
         :param item: Search parameter (word)
-        :return: Returns a list of matching Encoded Items as dictionaries
+        :return: Returns the first item found
         """
-        return [x.as_dict() for x in self.items if x.word.lower() == item.lower()]
+        for item in self.items:
+            if word.lower() == item.word.lower():
+                return item
+        return None
+    
+    def __contains__(self, key: str):
+        return key.lower() in [item.word.lower() for item in self.items]
 
     def get_all(self) -> list[dict]:
         """
@@ -86,7 +100,7 @@ class ValueDictionary:
         """
         return [i.as_dict() for i in self.items]
 
-    def add_from_csv(self, filename) -> None:
+    def load_from_csv(self, filename) -> None:
         """
         Reads the given csv file, assumes that the file will be in the following format:
 
@@ -108,9 +122,9 @@ class ValueDictionary:
         with open(filename, 'w') as file:
             writer = csv.writer(file)
             for item in self.items:
-                writer.writerow([item.word, item.parent, item.value])
+                writer.writerow([item.word, item.parent, str(item.values)])
 
-    def add_from_json(self, filename: str):
+    def load_from_json(self, filename: str):
         """
         Reads the given json file, assumes that the file will be in the following format:
 
@@ -135,4 +149,55 @@ class ValueDictionary:
         import json
         with open(filename) as file:
             json.dump(self.get_all(), file)
+
+
+class KnowledgeItem:
+    """
+    Class representing an Knowledge Item. DTO with an as_dict method for dictionary representation.
+    """
+    def __init__(self, params: list[str], graphs: list[str]):
+        self.params: tuple[str] = tuple(params)
+        self.graphs: tuple[str] = tuple(graphs)
+        
+    def as_dict(self) -> dict:
+        return {self.params:self.graphs}
+    
+    def as_pair(self) -> tuple(tuple[str]):
+        return (self.params, self.graphs)
+
+
+class KnowledgeBase:
+    def __init__(self):
+        self.items: list[KnowledgeItem] = []
+
+    def load_from_json(self, filename:str) -> None:
+        import json
+        with open(filename) as file:
+            json = json.load(file)
+            for item in json:
+                self.add_item(params=item['params'], graphs=item['graphs'])
+                
+    def add_item(self, params: list[str], graphs: list[str]) -> None:
+        self.items.append(KnowledgeItem(params, graphs))
+
+    
+    def lower_list(self, ls:list[str]) -> list[str]:
+        return [item.lower() for item in ls]
+    
+    def get_all_dict(self) -> dict:        
+        return {k:v for k, v in [i.as_pair() for i in self.items]}
+
+    def recommend(self, vd:ValueDictionary, axes:list[str]):
+        from itertools import permutations
+        
+        decoded = [vd.decode(axis) for axis in axes]
+        
+        perms = list(permutations(decoded))
+        
+        knowledge = self.get_all_dict()
+        
+        recommend = [knowledge[perm] for perm in perms if perm in knowledge]
+        
+        return recommend
+
 
