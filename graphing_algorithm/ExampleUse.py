@@ -28,12 +28,15 @@ kb.load_from_json("knowledge_base.json")
 
 # Use the knowledge base to get graph recommendations with the chosen words while using the Value Dictionary
 # This will give us back a list of tuples containing recommended graphs
-# Each tuple in the list is a matching recommendation based on different permutations of the input words
+# Each tuple in the list is a matching set of graph recommendation based on different permutations of the input words
 # Each item in the tuple is a recommended graph ordered from most recommended to least recommended
 recommendations = kb.recommend(vd, chosen)
+
 print("Recommended Graphs: ")
+# Looping through list of recommendation sets
 for i, tup in enumerate(recommendations):
     print(f"Graph Set {i+1}")
+    # Looping through the recommended graphs
     for j, item in enumerate(tup):
         print(f'{j+1}: {item}')
     print()
