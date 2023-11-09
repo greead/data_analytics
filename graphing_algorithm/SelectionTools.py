@@ -22,11 +22,13 @@ class ValueDictionary:
     """
     Class representing the value dictionary. Contains a list of Encoded Items and methods for working with them.
     """
-    def __init__(self):
+    def __init__(self, filename=None):
         """
         Initializes the Value Dictionary with an empty Encoded Item list
         """
         self.items: list[EncodedItem] = []
+        if filename is not None:
+            self.load_from_json(filename)
 
     def add_item(self, new_value: EncodedItem) -> None:
         """
@@ -35,14 +37,14 @@ class ValueDictionary:
         """
         self.items.append(new_value)
 
-    def add_word(self, word: str, parent: str, value: list[str]) -> None:
-        """
-        Adds the Encoded Item to the dictionary
-        :param word: Word of item
-        :param parent: Parent of item
-        :param value: Value of item
-        """
-        self.items.append(EncodedItem(word, parent, value))
+    # def add_word(self, word: str, parent: str, value: list[str]) -> None:
+    #     """
+    #     Adds the Encoded Item to the dictionary
+    #     :param word: Word of item
+    #     :param parent: Parent of item
+    #     :param value: Value of item
+    #     """
+    #     self.items.append(EncodedItem(word, parent, value))
         
     def search_matches(self, problem_statement: str) -> list[str]:
         """Find all matches for the given problem statement
@@ -67,12 +69,12 @@ class ValueDictionary:
         """
         self.items = []
 
-    def add_all(self, new_values: list[EncodedItem]) -> None:
-        """
-        Adds all Encoded Items in the given list to the dictionary
-        :param new_values: Encoded Items list
-        """
-        self.items += new_values
+    # def add_all(self, new_values: list[EncodedItem]) -> None:
+    #     """
+    #     Adds all Encoded Items in the given list to the dictionary
+    #     :param new_values: Encoded Items list
+    #     """
+    #     self.items += new_values
         
     def decode(self, word: str) -> list[str]:
         if word in self:
@@ -111,7 +113,7 @@ class ValueDictionary:
         with open(filename) as file:
             reader = csv.reader(file)
             for line in reader:
-                self.add_word(line[0], line[1], line[2])
+                self.add_item(EncodedItem(line[0], line[1], line[2]))
 
     def write_to_csv(self, filename):
         """
@@ -139,7 +141,7 @@ class ValueDictionary:
         with open(filename) as file:
             json = json.load(file)
             for item in json:
-                self.add_word(item['word'], item['parent'], item['value'])
+                self.add_item(EncodedItem(item['word'], item['parent'], item['value']))
 
     def write_to_json(self, filename: str):
         """
@@ -167,8 +169,10 @@ class KnowledgeItem:
 
 
 class KnowledgeBase:
-    def __init__(self):
+    def __init__(self, filename:str=None):
         self.items: list[KnowledgeItem] = []
+        if filename is not None:
+            self.load_from_json(filename)
 
     def load_from_json(self, filename:str) -> None:
         import json
