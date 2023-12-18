@@ -61,7 +61,17 @@ class ValueDictionary:
                 cleaned_statement += letter
             
         words = cleaned_statement.split()
-        return [word for word in words if word.lower() in self]        
+        return [word for word in words if word.lower() in self]
+    
+    def match_parents(self, items: list[str]) -> list[str]:
+        return_list = []
+        for item in items:
+            parent = self[item].parent
+            if parent != '' and parent not in return_list:
+                return_list.append(parent)
+            elif parent == '':
+                return_list.append(item)
+        return return_list
 
     def clear(self) -> None:
         """
@@ -76,9 +86,9 @@ class ValueDictionary:
     #     """
     #     self.items += new_values
         
-    def decode(self, word: str) -> list[str]:
+    def decode(self, word: str) -> tuple[str]:
         if word in self:
-            return self[word].values[0]
+            return tuple(self[word].values)
         return None
     
     def __getitem__(self, word:str) -> EncodedItem:
@@ -190,18 +200,39 @@ class KnowledgeBase:
     
     def get_all_dict(self) -> dict:        
         return {k:v for k, v in [i.as_pair() for i in self.items]}
+    
+    def combinate(self, tupes: list[tuple]) -> list[tuple[str]]:
+        from itertools import product
+        
+        axes = [list(tupe) for tupe in tupes]
+        for axis in axes:
+            axis.append('')
+        return list(product(*axes))
+        
 
-    def recommend(self, vd:ValueDictionary, axes:list[str]):
+    def recommend(self, vd:ValueDictionary, items:list[str]):
         from itertools import permutations
+        
+        axes = vd.match_parents(items)
         
         decoded = [vd.decode(axis) for axis in axes]
         
-        perms = list(permutations(decoded))
+        combs = self.combinate(decoded)
+        
+        # perms = list(permutations(combs))
+        perms = []
+        for comb in combs:
+            perms += [perm for perm in permutations(comb)]
+        
+        filtered = []
+        for perm in perms:
+            filtered.append(tuple(filter(lambda perm: perm != '', perm)))
+
+        filtered = list(set(filtered))
         
         knowledge = self.get_all_dict()
-        
-        recommend = [knowledge[perm] for perm in perms if perm in knowledge]
-        
+
+        recommend = [knowledge[perm] for perm in filtered if perm in knowledge]
         return recommend
 
 

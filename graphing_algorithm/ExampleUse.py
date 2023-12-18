@@ -8,7 +8,7 @@ vd = st.ValueDictionary(filename="value_dictionary.json")
 kb = st.KnowledgeBase(filename="knowledge_base.json")
 
 # Create a prompt
-prompt = "I want to see GDP over time."
+prompt = "I want to see GDP from January to March over time."
 print("Prompt: " + prompt + "\n")
 
 # Search for all words in the prompt that are also found in the Value Dictionary

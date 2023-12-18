@@ -123,5 +123,15 @@
         "word":"Grade",
         "parent":"",
         "value":["Categorical"]
+    },
+    {
+        "word":"Month",
+        "parent":"",
+        "value":["Time", "Categorical"]
+    },
+    {
+        "word":"Money",
+        "parent":"",
+        "value":["Continuous"]
     }
 ]
