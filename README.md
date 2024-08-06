@@ -9,14 +9,14 @@ Each of the studies uploaded are based on data sourced from Kaggle in an effort 
 
 #### Relevant technologies
 - Python
-- Pandas
-- Matplotlib
-- Seaborn
-- Numpy
+- Pandas, Matplotlib, Seaborn, Numpy, Requests
+- Web APIs
+- JSON, CSV
 - Jupyter notebook
 
 #### Relevant skills
 - Python programming
+- Data collection
 - Exploratory data analysis
 - Data cleaning
 - Data analysis
