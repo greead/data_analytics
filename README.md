@@ -1,39 +1,35 @@
-# Selection Tools
-The selection tools module includes several tools for decoding plain-text words and getting recommendations for graphing. Below you will find all of the necessary documentation for using the selection tools.
+## Data analytics studies
+Alekzander Green
 
-## Importing the tools
-You can import the tools using the following statement as long as the tools are in the same directory:
-```
-import SelectionTools as st
-```
+### Summary
+This is a collection of various data analytics and visualization studies that I have completed in addition to a study into choosing which graphs should be used given a particular dataset.
 
-## The Value Dictionary
-In order to decode words into parameters that can be used to recommend graphs, you need to use the value dictionary. The value dictionary can primarily be used to search a prompt for matching words in the dictionary. In addition to this, it is necessary to be passed into the knowledge base for decoding purposes.
+### Studies
+Each of the studies uploaded are based on data sourced from Kaggle in an effort to learn various data analysis and visualization techniques. The individual techniques can be found in the respective project folders.
 
-### Loading the value dictionary
-To begin using the value dictionary, you must create a new instance of it and pass in the file name of the saved value dictionary.
-```
-vd = st.ValueDictionary(filename="value_dictionary.json")
-```
+#### Relevant technologies
+- Python
+- Pandas
+- Matplotlib
+- Seaborn
+- Numpy
+- Jupyter notebook
 
-### Searching the value dictionary for matching words from a prompt
-Given a prompt, we are able to search each word for matches in the value dictionary.
-```
-matches = vd.search_matches(prompt)
-```
+#### Relevant skills
+- Python programming
+- Exploratory data analysis
+- Data cleaning
+- Data analysis
+- Data visualization
+- Storytelling
 
-## The Knowledge Base
-The knowledge base is responsible for recommending graphs to the user. It does this by decoding selected words using a given value dictionary then searching a knowledge base for all graphs that match each combination and permutation of the decoded values.
+### Graph selection algorithm
+This algorithm attempts to use research into various data visualization techniques to create an algorithm that can give graphing suggestions based on the given dataset and additional prompting.
 
-### Loading the knowledge base
-To begin using the knowledge base, you must create a new instance of it and pass in the file name of the saved knowledge base.
-```
-kb = st.KnowledgeBase(filename="knowledge_base.json")
-```
+#### Relevant technologies
+- Python
+- JSON
 
-### Recommending graphs
-Given a list of selected words and a value dictionary for searching, we are able to receive a list of graph recommendation sets for each available combination and permutation.
-```
-recommendations = kb.recommend(vd, chosen)
-```
-
+#### Relevant skills
+- Python programming
+- Research (Data visualization)
